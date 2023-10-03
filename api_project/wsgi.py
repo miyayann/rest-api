@@ -1,5 +1,5 @@
 """
-WSGI config for apiproject project.
+WSGI config for api_project project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

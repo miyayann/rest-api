@@ -3,6 +3,7 @@ from django.conf.urls import include
 from rest_framework import routers
 from api.views import TaskViewSet, CreateUserView, TaskListView, TaskRetrieveView,\
     PostListView, PostRetrieveView
+from .views import UserLoginView
     
     
 router = routers.DefaultRouter()
@@ -16,4 +17,5 @@ urlpatterns = [
     path('register/', CreateUserView.as_view(), name='register'),
     path('auth/', include('djoser.urls.jwt')),
     path('', include(router.urls)),
+    path('login/', UserLoginView.as_view(), name='user-login'),
 ]

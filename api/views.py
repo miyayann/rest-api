@@ -2,8 +2,12 @@ from django.shortcuts import render
 from rest_framework.permissions import AllowAny
 from rest_framework import generics
 from rest_framework import viewsets
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from .serializers import TaskSerializer, UserSerializer, PostSerializer
 from .models import Task, Post
+from django.contrib.auth import authenticate, login
 # Create your views here.
 
 
@@ -39,3 +43,19 @@ class TaskRetrieveView(generics.RetrieveAPIView):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    
+class UserLoginView(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)

@@ -53,3 +53,9 @@ class UserLoginView(APIView):
 
         user = authenticate(request, username=username, password=password)
         
+        if user is not None:
+            login(request, user)
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)

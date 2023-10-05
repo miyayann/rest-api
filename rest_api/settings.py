@@ -60,7 +60,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000"
+    "http://localhost:3000", "https://django-nextjs.vercel.app"
 ]
 
 SIMPLE_JWT = {
